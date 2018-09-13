@@ -1,4 +1,3 @@
-
 from scrapy import Spider, Request
 from scrapy.selector import Selector
 from urllib.parse import urlencode
@@ -66,7 +65,9 @@ class CLCarsTrucks(Spider):
         links = response.css('li.result-row a.hdrlnk::attr(href)').extract()
         for link in links:
             #links are relative
-            link = self.proto + self.city + '.' + self.domain + link
+            #link = self.proto + self.city + '.' + self.domain + link
+            #link = link
+            print(link + "\n")
             yield Request(link, callback=self.parse_detail_page)
 
     def parse_detail_page(self, response):
@@ -92,7 +93,7 @@ class CLCarsTrucks(Spider):
 
         if item['title']:
             self.idx += 1
-            item['idx'] = self.idx 
+            item['idx'] = self.idx
             yield item
 
     def processATTRS(self, attrs, item):
